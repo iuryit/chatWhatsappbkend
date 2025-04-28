@@ -64,7 +64,7 @@ app.post('/webhook', (req, res) => {
 // Endpoint para verificação inicial do Webhook
 app.get('/webhook', (req, res) => {
   console.log('Webhook GET');
-  const verify_token = "531FE70FFD685C69B24F7262A30A391CC8ACDA";
+  const verify_token = "EAATZBRkrgjUEBO033BGZBJWnVlo5WsR2ckoDciAZCOWNQ40DqdEWcIuhEhsHwAeN62o3jeGCQ1yA9EJdLwrnyjvoIwojMdmoHZAwHaqAACsaOMQwjOlsjNRTGwm8flTflLM3XIb5E5oPMqALvTGAMcTuiS5uZBgqV4VSePlkjjmZAGfY1lu5HLDZCBQPnkVEdfo8xZCOWKbaXRW8RVmMMd5EAdKhmrlIKZCgCUK8ZD";
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];

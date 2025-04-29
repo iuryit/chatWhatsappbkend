@@ -4,6 +4,7 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 const axios = require('axios');
 
+const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -46,35 +47,39 @@ app.post('/send-message', async (req, res) => {
   }
 });
 
-app.use((req, res, next) => {
-  console.log('🔔 Nova requisição recebida:', req.method, req.url);
-  next();
-});
 
-// Webhook para receber mensagens e notificações do WhatsApp
-app.post('/webhook', (req, res) => {
-  console.log('Webhook POST');
-  const body = req.body;
-  console.log('Webhook recebido:', JSON.stringify(body, null, 2));
-
-  io.emit('nova-mensagem', body);
-  res.sendStatus(200);
-});
-
-// Endpoint para verificação inicial do Webhook
+// Verificar webhook (GET)
 app.get('/webhook', (req, res) => {
-  console.log('Webhook GET');
-  const verify_token = "EAATZBRkrgjUEBO033BGZBJWnVlo5WsR2ckoDciAZCOWNQ40DqdEWcIuhEhsHwAeN62o3jeGCQ1yA9EJdLwrnyjvoIwojMdmoHZAwHaqAACsaOMQwjOlsjNRTGwm8flTflLM3XIb5E5oPMqALvTGAMcTuiS5uZBgqV4VSePlkjjmZAGfY1lu5HLDZCBQPnkVEdfo8xZCOWKbaXRW8RVmMMd5EAdKhmrlIKZCgCUK8ZD";
+  const verifyToken = 'EAATZBRkrgjUEBO033BGZBJWnVlo5WsR2ckoDciAZCOWNQ40DqdEWcIuhEhsHwAeN62o3jeGCQ1yA9EJdLwrnyjvoIwojMdmoHZAwHaqAACsaOMQwjOlsjNRTGwm8flTflLM3XIb5E5oPMqALvTGAMcTuiS5uZBgqV4VSePlkjjmZAGfY1lu5HLDZCBQPnkVEdfo8xZCOWKbaXRW8RVmMMd5EAdKhmrlIKZCgCUK8ZD';
+
+  // Pegando parâmetros da query string
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
 
-  if (mode && token && mode === 'subscribe' && token === verify_token) {
-    console.log('WEBHOOK VERIFICADO');
-    res.status(200).send(challenge);
+  if (mode && token) {
+    if (mode === 'subscribe' && token === verifyToken) {
+      console.log('WEBHOOK VERIFICADO COM SUCESSO!');
+      res.status(200).send(challenge);
+    } else {
+      res.sendStatus(403);
+    }
   } else {
-    res.sendStatus(403);
+    res.sendStatus(400);
   }
+});
+
+
+// Receber mensagens (POST)
+app.post('/webhook', (req, res) => {
+  console.log('Webhook recebido:', JSON.stringify(req.body, null, 2));
+  // io.emit('nova-mensagem', body);
+  res.sendStatus(200);
+});
+
+app.use((req, res, next) => {
+  console.log('🔔 Nova requisição recebida:', req.method, req.url);
+  next();
 });
 
 server.listen(3000, () => {

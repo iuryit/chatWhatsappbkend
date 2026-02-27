@@ -18,9 +18,7 @@ app.use(express.json());
 
 const token = process.env.WHATSAPP_TOKEN || 'TOKEN_TEMPORARIO';
 const phoneNumberId =  process.env.PHONE_NUMBER_ID || '1111';
-// const phoneNumberId = '985575657064027';
-// const phoneNumberId = '+1 555 136 8377';
-// const phoneNumberId = '+15551368377';
+
 // Rota para enviar mensagem de texto via API do WhatsApp
 app.post('/send-message', async (req, res) => {
   const { to, message } = req.body;

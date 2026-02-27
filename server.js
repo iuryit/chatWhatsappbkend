@@ -16,8 +16,8 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
-const token = 'EAATZBRkrgjUEBO033BGZBJWnVlo5WsR2ckoDciAZCOWNQ40DqdEWcIuhEhsHwAeN62o3jeGCQ1yA9EJdLwrnyjvoIwojMdmoHZAwHaqAACsaOMQwjOlsjNRTGwm8flTflLM3XIb5E5oPMqALvTGAMcTuiS5uZBgqV4VSePlkjjmZAGfY1lu5HLDZCBQPnkVEdfo8xZCOWKbaXRW8RVmMMd5EAdKhmrlIKZCgCUK8ZD';
-const phoneNumberId = '597150736823959';
+const token = process.env.WHATSAPP_TOKEN || 'TOKEN_TEMPORARIO';
+const phoneNumberId =  process.env.PHONE_NUMBER_ID || '1111';
 // const phoneNumberId = '985575657064027';
 // const phoneNumberId = '+1 555 136 8377';
 // const phoneNumberId = '+15551368377';

@@ -48,7 +48,7 @@ app.post('/send-message', async (req, res) => {
 
 // Verificar webhook (GET)
 app.get('/webhook', (req, res) => {
-  const verifyToken = 'EAATZBRkrgjUEBO033BGZBJWnVlo5WsR2ckoDciAZCOWNQ40DqdEWcIuhEhsHwAeN62o3jeGCQ1yA9EJdLwrnyjvoIwojMdmoHZAwHaqAACsaOMQwjOlsjNRTGwm8flTflLM3XIb5E5oPMqALvTGAMcTuiS5uZBgqV4VSePlkjjmZAGfY1lu5HLDZCBQPnkVEdfo8xZCOWKbaXRW8RVmMMd5EAdKhmrlIKZCgCUK8ZD';
+  const verifyToken = process.env.WHATSAPP_TOKEN; // Trocar futuramente
 
   // Pegando parâmetros da query string
   const mode = req.query['hub.mode'];
